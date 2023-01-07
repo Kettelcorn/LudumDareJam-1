@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private GameObject beingDragged;
     private Collision2D col;
     private float move;
-    private bool drag;
 
     
     void Start()
@@ -36,15 +35,13 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space pressed");
-            if (!col.gameObject.CompareTag("Hole"))
+            if (col.gameObject.CompareTag("Hole"))
             {
-                Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.17f), transform.rotation);
+                Destroy(col.gameObject);
             }
             else
             {
-                Debug.Log("Should destroy");
-                Destroy(col.gameObject);
+                Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.15f), transform.rotation);
             }
         }
 
@@ -57,30 +54,26 @@ public class Player : MonoBehaviour
         // If player presses left shift, attempt to drag dead body
         if (Input.GetKeyDown(KeyCode.LeftShift) && ClosestEnemy() != null)
         {
-            if (ClosestEnemy().GetComponent<Enemy>().Dead)
+            if (ClosestEnemy().GetComponent<Enemy>().Dead && !ClosestEnemy().GetComponent<Enemy>().Drag)
             {
-                drag = !drag; 
                 beingDragged = ClosestEnemy();
+                beingDragged.GetComponent<Enemy>().Drag = true;
             } 
-            else if (beingDragged != null)
+            else if (ClosestEnemy().GetComponent<Enemy>().Dead && ClosestEnemy().GetComponent<Enemy>().Drag)
             {
-                drag = !drag;
+                beingDragged.GetComponent<Enemy>().Drag = false;
                 beingDragged = null;
             }
         }
-
-        if (drag)
+        if (beingDragged != null)
         {
-            Drag();
-        }    
+            if (beingDragged.GetComponent<Enemy>().Drag)
+            {
+                Drag();
+            }
+        }
+           
 
-    }
-
-    public bool Dragging
-    {
-        get{return drag; }
-        set{ drag = value; }
-        
     }
 
 
@@ -101,11 +94,11 @@ public class Player : MonoBehaviour
         if (victim != null && victim.GetComponent<Enemy>().Dead)
         {
             if (move > 0)
-                victim.transform.position = new Vector2(transform.position.x - 1.5f, transform.position.y);
+                victim.transform.position = new Vector2(transform.position.x - 1.5f, victim.transform.position.y);
             else if (move < 0)
-                victim.transform.position = new Vector2(transform.position.x + 1.5f, transform.position.y);
+                victim.transform.position = new Vector2(transform.position.x + 1.5f, victim.transform.position.y);
             else
-                victim.transform.position = new Vector2(victim.transform.position.x, transform.position.y);
+                victim.transform.position = new Vector2(victim.transform.position.x, victim.transform.position.y);
 
         }
     } 

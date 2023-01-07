@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, EnemyInterface
 {
     [SerializeField] private int time;
     [SerializeField] private float speed;
@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private int counter;
     private bool death;
+    private bool drag;
     private GameObject[] enemy;
 
     // Start is called before the first frame update
@@ -44,7 +45,13 @@ public class Enemy : MonoBehaviour
         set { death = value; }
     }
 
-    void Movement()
+    public bool Drag
+    {
+        get { return drag; }
+        set { drag = value; }
+    }
+
+    public void Movement()
     {
         counter++;
         if (counter < time) rb.velocity = new Vector2(speed, 0);
@@ -55,16 +62,16 @@ public class Enemy : MonoBehaviour
     }
     
 
-    void Death()
+    public void Death()
     {
         GetComponent<SpriteRenderer>().color = Color.red;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Hole") && player.GetComponent<Player>().Dragging == false)
+        if (collision.gameObject.CompareTag("Hole") && death && drag == false)
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+            transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
         }
     }
 }
