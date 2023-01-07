@@ -9,8 +9,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject[] enemy;
 
     private Rigidbody2D rb;
+    private GameObject beingDragged;
     private float move;
     private int jumpTracker;
+    private bool drag;
 
     
     void Start()
@@ -47,10 +49,25 @@ public class Player : MonoBehaviour
         }
 
         // If player presses left shift, attempt to drag dead body
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && ClosestEnemy() != null)
+        {
+            if (ClosestEnemy().GetComponent<Enemy>().Dead)
+            {
+                drag = !drag; 
+                beingDragged = ClosestEnemy();
+            } 
+            else if (beingDragged != null)
+            {
+                drag = !drag;
+                beingDragged = null;
+            }
+        }
+
+        if (drag)
         {
             Drag();
-        }
+        }    
+
     }
 
     // Selects closest npc, checks if it is close enough, and kills it if so
@@ -65,10 +82,10 @@ public class Player : MonoBehaviour
 
     private void Drag()
     {
-        GameObject victim = ClosestEnemy();
+        GameObject victim = beingDragged;
         if (victim != null && victim.GetComponent<Enemy>().Dead)
         {
-            Debug.Log("You can drag this mf");
+            victim.transform.position = new Vector2(transform.position.x - 1.5f, transform.position.y); 
         }
     } 
 

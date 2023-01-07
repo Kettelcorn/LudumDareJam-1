@@ -10,12 +10,18 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private int counter;
     private bool death;
+    private GameObject[] enemy;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         counter = 0;
+        enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject npc in enemy)
+        {
+            Physics2D.IgnoreCollision(npc.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
     }
 
     // Update is called once per frame
