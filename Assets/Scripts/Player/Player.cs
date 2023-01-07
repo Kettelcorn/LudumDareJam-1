@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private GameObject beingDragged;
     private Collider2D col;
     private float move;
+    private bool hidden;
 
     
     void Start()
@@ -76,7 +77,17 @@ public class Player : MonoBehaviour
 
     }
 
+    public bool Hide
+    {
+        get { return hidden; }
+        set { hidden = value; }
+    }
 
+    public GameObject Organs
+    {
+        get { return beingDragged; }
+        set { beingDragged = value; }
+    }
     // Selects closest npc, checks if it is close enough, and kills it if so
     private void Kill()
     {

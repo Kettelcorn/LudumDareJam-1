@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Hole
   - Tree
+  - Wall
+  - Police
+  - Hospital
   layers:
   - Default
   - TransparentFX

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TreeBehavior : MonoBehaviour
 {
-    private bool hidden;
+    [SerializeField] private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -17,17 +17,11 @@ public class TreeBehavior : MonoBehaviour
        
     }
 
-    public bool Hide
-    {
-        get { return hidden; }
-        set { hidden = value; }
-    }
-    void OnTriggerStay2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player is hidden");
-            hidden = true;
+            player.GetComponent<Player>().Hide = true;
         }
     }
 
@@ -35,8 +29,7 @@ public class TreeBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Not hidden anymore");
-            hidden = false;
+            player.GetComponent<Player>().Hide = false;
         }
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, EnemyInterface
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private int time;
     [SerializeField] private float speed;
