@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Player grabs dead enemy and drags, orienting position of enemy based on movement
     private void Drag()
     {
         GameObject victim = beingDragged;
@@ -89,6 +90,9 @@ public class Player : MonoBehaviour
                 victim.transform.position = new Vector2(transform.position.x - 1.5f, transform.position.y);
             else if (move < 0)
                 victim.transform.position = new Vector2(transform.position.x + 1.5f, transform.position.y);
+            else
+                victim.transform.position = new Vector2(victim.transform.position.x, transform.position.y);
+
         }
     } 
 
