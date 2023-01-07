@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
         
     }
 
-
     void Update()
     {
         // Sets horizontal movement
@@ -46,10 +45,35 @@ public class Player : MonoBehaviour
         {
             Kill();  
         }
+
+        // If player presses left shift, attempt to drag dead body
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Drag();
+        }
     }
 
     // Selects closest npc, checks if it is close enough, and kills it if so
-    void Kill()
+    private void Kill()
+    {
+        GameObject victim = ClosestEnemy(); 
+        if (victim != null)
+        {
+            victim.GetComponent<Enemy>().Dead = true;
+        }
+    }
+
+    private void Drag()
+    {
+        GameObject victim = ClosestEnemy();
+        if (victim != null && victim.GetComponent<Enemy>().Dead)
+        {
+            Debug.Log("You can drag this mf");
+        }
+    } 
+
+    // Checks all enemies and returns the closest one
+    private GameObject ClosestEnemy()
     {
         int victim = 0;
         for (int i = 1; i < enemy.Length; i++)
@@ -59,16 +83,16 @@ public class Player : MonoBehaviour
             {
                 victim = i;
             }
-            Debug.Log("Victim =" + victim);
+            
         }
+        Debug.Log("Victim =" + victim);
+        Debug.Log("Distance: " + Vector2.Distance(transform.position, enemy[victim].transform.position));
         if ((Vector2.Distance(transform.position, enemy[victim].transform.position)) < 2)
         {
-            enemy[victim].GetComponent<Enemy>().Dead = true;
-            Debug.Log("Killed npc #" + victim);
+            Debug.Log("You are close enough");
+            return enemy[victim];
         }
-        Debug.Log(enemy[victim].GetComponent<Enemy>().Dead);
-        Debug.Log("Distance: " + Vector2.Distance(transform.position, enemy[victim].transform.position));
-        
+        return null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
