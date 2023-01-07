@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int time;
     [SerializeField] private float speed;
     [SerializeField] private float pause;
+    [SerializeField] private GameObject player;
     private Rigidbody2D rb;
     private int counter;
     private bool death;
@@ -57,5 +58,13 @@ public class Enemy : MonoBehaviour
     void Death()
     {
         GetComponent<SpriteRenderer>().color = Color.red;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Hole") && player.GetComponent<Player>().Dragging == false)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+        }
     }
 }
