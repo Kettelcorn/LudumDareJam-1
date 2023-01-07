@@ -85,7 +85,10 @@ public class Player : MonoBehaviour
         GameObject victim = beingDragged;
         if (victim != null && victim.GetComponent<Enemy>().Dead)
         {
-            victim.transform.position = new Vector2(transform.position.x - 1.5f, transform.position.y); 
+            if (move > 0)
+                victim.transform.position = new Vector2(transform.position.x - 1.5f, transform.position.y);
+            else if (move < 0)
+                victim.transform.position = new Vector2(transform.position.x + 1.5f, transform.position.y);
         }
     } 
 
