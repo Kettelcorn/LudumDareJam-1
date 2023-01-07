@@ -16,7 +16,7 @@ interface EnemyInterface
     }
     void Movement();
     void Death();
-    void OnCollisionStay2D(Collision2D collision);
+    void OnTriggerStay2D(Collider2D other);
 
 
 }

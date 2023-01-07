@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private GameObject[] enemy;
     private Rigidbody2D rb;
     private GameObject beingDragged;
-    private Collision2D col;
+    private Collider2D col;
     private float move;
 
     
@@ -35,13 +35,13 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (col.gameObject.CompareTag("Hole"))
+            if (col == null)
+            {
+                Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.0f), transform.rotation);
+            }
+            else if (col.gameObject.CompareTag("Hole"))
             {
                 Destroy(col.gameObject);
-            }
-            else
-            {
-                Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.15f), transform.rotation);
             }
         }
 
@@ -126,8 +126,13 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         col = collision;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        col = null;
     }
 }

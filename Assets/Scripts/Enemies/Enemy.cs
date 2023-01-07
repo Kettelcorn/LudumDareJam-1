@@ -67,10 +67,13 @@ public class Enemy : MonoBehaviour, EnemyInterface
         GetComponent<SpriteRenderer>().color = Color.red;
     }
 
-    public void OnCollisionStay2D(Collision2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Hole"))
+            Debug.Log("Is touching hole");
         if (collision.gameObject.CompareTag("Hole") && death && drag == false)
         {
+            Debug.Log("should be burried");
             transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
         }
     }

@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Enemy
   - Hole
+  - Tree
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Behind Tree
+    uniqueID: 2736118443
+    locked: 0
+  - name: Infront Tree
+    uniqueID: 3307277987
     locked: 0
