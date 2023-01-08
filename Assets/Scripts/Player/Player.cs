@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
         if (victim != null)
         {
             victim.GetComponent<Enemy>().Dead = true;
+            victim.GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree";
             victim.transform.Rotate(0, 0, 90);
         }
     }
@@ -141,7 +142,7 @@ public class Player : MonoBehaviour
     {
         if (col == null)
         {
-            Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.0f), transform.rotation);
+            Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.5f), transform.rotation);
         }
         else if (col.gameObject.CompareTag("Hole"))
         {

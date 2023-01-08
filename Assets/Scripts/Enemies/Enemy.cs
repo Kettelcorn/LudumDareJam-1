@@ -33,12 +33,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (death)
-        {
-            Death();
-        }
-        else
-        {
+        if (!death)
+        { 
             Movement();
         }
 
@@ -83,12 +79,6 @@ public class Enemy : MonoBehaviour
         else if (counter < time * 2 + pause * 2) rb.velocity = new Vector2(0, 0);
         else counter = 0;
     }
-    
-
-    public void Death()
-    {
-        GetComponent<SpriteRenderer>().color = Color.red;
-    }
 
     public void OnTriggerStay2D(Collider2D collision)
     {
@@ -97,7 +87,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Hole") && death && drag == false)
         {
             Debug.Log("should be burried");
-            transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
+            transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y - .1f);
             burried = true;
         }
         else
