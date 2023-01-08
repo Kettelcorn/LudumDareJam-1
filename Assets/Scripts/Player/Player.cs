@@ -5,8 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float dragSpeed;
     [SerializeField] private GameObject hole;
 
+    private float tempSpeed;
     private GameObject[] enemy;
     private Rigidbody2D rb;
     private GameObject beingDragged;
@@ -30,20 +32,25 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
         // Sets horizontal movement
         move = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(speed * move, rb.velocity.y);
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (beingDragged != null)
         {
-            if (col == null)
-            {
-                Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.0f), transform.rotation);
-            }
-            else if (col.gameObject.CompareTag("Hole"))
-            {
-                Destroy(col.gameObject);
-            }
+            rb.velocity = new Vector2(move * dragSpeed, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(speed * move, rb.velocity.y);
+        }
+        
+        
+
+        if (Input.GetKeyDown(KeyCode.Space) && beingDragged == null)
+        {
+            tempSpeed = speed;
+            speed = 0;
+            Invoke("Dig", 1);
         }
 
         // If player presses F, attempt to kill npc
@@ -88,6 +95,7 @@ public class Player : MonoBehaviour
         get { return beingDragged; }
         set { beingDragged = value; }
     }
+
     // Selects closest npc, checks if it is close enough, and kills it if so
     private void Kill()
     {
@@ -114,6 +122,19 @@ public class Player : MonoBehaviour
         }
     } 
 
+    private void Dig()
+    {
+        if (col == null)
+        {
+            Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.0f), transform.rotation);
+        }
+        else if (col.gameObject.CompareTag("Hole"))
+        {
+            Destroy(col.gameObject);
+        }
+        speed = tempSpeed;
+    }
+
     // Checks all enemies and returns the closest one
     private GameObject ClosestEnemy()
     {
@@ -136,6 +157,8 @@ public class Player : MonoBehaviour
         }
         return null;
     }
+
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {

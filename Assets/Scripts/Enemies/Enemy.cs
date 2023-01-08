@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
         }
         if (Math.Abs(transform.position.x - police.transform.position.x) < 1.5 && death && !burried)
         {
-            transform.position = new Vector2(100000, 1000000);
+            //SceneManager.LoadScene(sceneName: "Game Over Found");
         }
     }
 

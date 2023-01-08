@@ -76,7 +76,7 @@ public class Police : MonoBehaviour
         
         if (Math.Abs(distance) < 1.6 && chase == true && shake == false)
         {
-            SceneManager.LoadScene(sceneName: "Game Over");
+        //SceneManager.LoadScene(sceneName: "Game Over Caught");
         } 
     }
 
@@ -115,14 +115,6 @@ public class Police : MonoBehaviour
         else if (collision.gameObject.CompareTag("Hospital"))
         {
             direction = false;
-        }
-        
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (collision.gameObject.GetComponent<Enemy>().Dead && !collision.gameObject.GetComponent<Enemy>().Bury)
-            {
-                collision.gameObject.transform.position = new Vector2(100000, 1000000);
-            }
         }
     }
 }

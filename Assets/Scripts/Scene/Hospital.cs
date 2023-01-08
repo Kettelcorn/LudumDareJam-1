@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Hospital : MonoBehaviour
 {
@@ -25,9 +26,15 @@ public class Hospital : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && player.GetComponent<Player>().Organs != null)
         {
-            player.GetComponent<Player>().Organs.transform.position = new Vector2(100000, 1000000);
+            player.GetComponent<Player>().Organs.transform.position = new Vector2(10000000, 10000000);
+            player.GetComponent<Player>().Organs.GetComponent<Enemy>().Drag = false;
+            player.GetComponent<Player>().Organs = null;
             money += 1000;
             amount.text = "$" + money;
+            if (money == 5000)
+            {
+                SceneManager.LoadScene(sceneName: "Victory Scene");
+            }
             Debug.Log("Successfully sold");
         }
     }
