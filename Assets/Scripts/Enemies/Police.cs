@@ -39,20 +39,23 @@ public class Police : MonoBehaviour
             shake = false;
         }
 
-        //Flashes blue and red if chasing
-        if (chase == true)
-        {
-            if ((int)timer % 2 == 0)
-                GetComponent<SpriteRenderer>().color = Color.red;
-            else
-                GetComponent<SpriteRenderer>().color = Color.blue;
 
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log("distance = " + distance);
+            Debug.Log("chase = " + chase);
+            Debug.Log("shake = " + shake);
+            Debug.Log("is player hidden? " + player.GetComponent<Player>().Hide);
+        }
+
+        if (!shake)
+        {
+            GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree";
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponent<SpriteRenderer>().sortingLayerName = "Infront Tree";
         }
-
         //Determines to continue or end chase
         if (Math.Abs(distance) > 10)
         {
