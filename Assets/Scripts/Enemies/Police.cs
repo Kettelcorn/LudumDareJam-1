@@ -76,7 +76,7 @@ public class Police : MonoBehaviour
         
         if (Math.Abs(distance) < 1.6 && chase == true && shake == false)
         {
-        //SceneManager.LoadScene(sceneName: "Game Over Caught");
+        SceneManager.LoadScene(sceneName: "Game Over Caught");
         } 
     }
 
