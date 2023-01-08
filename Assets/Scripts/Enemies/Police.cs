@@ -116,5 +116,13 @@ public class Police : MonoBehaviour
         {
             direction = false;
         }
+        
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.gameObject.GetComponent<Enemy>().Dead && !collision.gameObject.GetComponent<Enemy>().Bury)
+            {
+                collision.gameObject.transform.position = new Vector2(100000, 1000000);
+            }
+        }
     }
 }

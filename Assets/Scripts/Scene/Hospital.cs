@@ -25,7 +25,7 @@ public class Hospital : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && player.GetComponent<Player>().Organs != null)
         {
-            player.GetComponent<Player>().Organs.transform.position = new Vector2(500, 500);
+            player.GetComponent<Player>().Organs.transform.position = new Vector2(100000, 1000000);
             money += 1000;
             amount.text = "$" + money;
             Debug.Log("Successfully sold");

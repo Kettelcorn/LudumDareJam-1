@@ -17,9 +17,9 @@ public class TreeBehavior : MonoBehaviour
        
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && player.GetComponent<Player>().Organs == null)
         {
             player.GetComponent<Player>().Hide = true;
         }

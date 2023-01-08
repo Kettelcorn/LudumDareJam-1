@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,10 +9,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float pause;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject police;
     private Rigidbody2D rb;
     private int counter;
     private bool death;
     private bool drag;
+    private bool burried;
     private GameObject[] enemy;
 
     // Start is called before the first frame update
@@ -37,6 +40,10 @@ public class Enemy : MonoBehaviour
         {
             Movement();
         }
+        if (Math.Abs(transform.position.x - police.transform.position.x) < 1.5 && death && !burried)
+        {
+            transform.position = new Vector2(100000, 1000000);
+        }
     }
 
     public bool Dead
@@ -49,6 +56,11 @@ public class Enemy : MonoBehaviour
     {
         get { return drag; }
         set { drag = value; }
+    }
+
+    public bool Bury
+    {
+        get { return burried; }
     }
 
     public void Movement()
@@ -75,6 +87,11 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("should be burried");
             transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
+            burried = true;
+        }
+        else
+        {
+            burried = false;
         }
     }
 }
