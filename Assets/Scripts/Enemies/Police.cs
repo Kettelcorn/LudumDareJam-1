@@ -8,6 +8,10 @@ public class Police : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject music;
+    [SerializeField] private AudioClip slow;
+    [SerializeField] private AudioClip fast;
+
 
     private Rigidbody2D rb;
     private bool direction;
@@ -22,6 +26,7 @@ public class Police : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         timer = 0.0f;
+        music.GetComponent<AudioSource>().loop = true;
     }
 
     // Update is called once per frame
@@ -30,15 +35,19 @@ public class Police : MonoBehaviour
         timer += Time.deltaTime;
         distance = transform.position.x - player.transform.position.x;
 
-        if (Input.GetKeyDown(KeyCode.H))
-            Debug.Log("Distance = " + distance);
+        
         //Determines to chase or not
         if (Math.Abs(distance) < 8 &&  !player.GetComponent<Player>().Hide)
         {
+            if (!chase)
+            {
+                music.GetComponent<AudioSource>().clip = fast;
+                music.GetComponent<AudioSource>().Play();
+                music.GetComponent<AudioSource>().loop = true;
+            }
             chase = true;
             shake = false;
         }
-
 
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -73,6 +82,12 @@ public class Police : MonoBehaviour
         }
         else
         {
+            if (chase)
+            {
+                music.GetComponent<AudioSource>().clip = slow;
+                music.GetComponent<AudioSource>().Play();
+                music.GetComponent<AudioSource>().loop = true;
+            }
             chase = false;
             Movement(speed);
         }
