@@ -35,6 +35,14 @@ public class Player : MonoBehaviour
 
         // Sets horizontal movement
         move = Input.GetAxis("Horizontal");
+        if (move > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        } 
+        else
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
         if (beingDragged != null)
         {
             rb.velocity = new Vector2(move * dragSpeed, rb.velocity.y);
@@ -56,7 +64,7 @@ public class Player : MonoBehaviour
         // If player presses F, attempt to kill npc
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Kill();  
+            Kill();
         }
 
         // If player presses left shift, attempt to drag dead body
@@ -103,6 +111,7 @@ public class Player : MonoBehaviour
         if (victim != null)
         {
             victim.GetComponent<Enemy>().Dead = true;
+            victim.transform.Rotate(0, 0, 90);
         }
     }
 
@@ -113,9 +122,15 @@ public class Player : MonoBehaviour
         if (victim != null && victim.GetComponent<Enemy>().Dead)
         {
             if (move > 0)
+            {
                 victim.transform.position = new Vector2(transform.position.x - 1.5f, victim.transform.position.y);
+            }
+                
             else if (move < 0)
+            {
                 victim.transform.position = new Vector2(transform.position.x + 1.5f, victim.transform.position.y);
+            }
+                
             else
                 victim.transform.position = new Vector2(victim.transform.position.x, victim.transform.position.y);
 

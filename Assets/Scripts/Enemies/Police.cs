@@ -77,7 +77,16 @@ public class Police : MonoBehaviour
         if (Math.Abs(distance) < 1.6 && chase == true && shake == false)
         {
         SceneManager.LoadScene(sceneName: "Game Over Caught");
-        } 
+        }
+
+        if (rb.velocity.x > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (rb.velocity.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 
     private void Movement(float runSpeed)

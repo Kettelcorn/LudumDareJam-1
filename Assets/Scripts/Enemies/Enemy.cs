@@ -41,9 +41,19 @@ public class Enemy : MonoBehaviour
         {
             Movement();
         }
+
         if (Math.Abs(transform.position.x - police.transform.position.x) < 1.5 && death && !burried)
         {
-            //SceneManager.LoadScene(sceneName: "Game Over Found");
+            SceneManager.LoadScene(sceneName: "Game Over Found");
+        }
+
+        if (rb.velocity.x > 0 && !death)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (rb.velocity.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 
