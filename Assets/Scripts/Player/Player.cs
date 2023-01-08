@@ -110,9 +110,12 @@ public class Player : MonoBehaviour
         GameObject victim = ClosestEnemy(); 
         if (victim != null)
         {
+            if (victim.GetComponent<Enemy>().Dead == false)
+            {
+                victim.transform.Rotate(0, 0, 90);
+            }
             victim.GetComponent<Enemy>().Dead = true;
-            victim.GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree";
-            victim.transform.Rotate(0, 0, 90);
+            victim.GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree"; 
         }
     }
 
