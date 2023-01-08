@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float pause;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject police;
+    [SerializeField] private Sprite hat;
+    [SerializeField] private Sprite farmer;
+
     private Rigidbody2D rb;
     private int counter;
     private bool death;
@@ -82,16 +85,24 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Hole"))
-            Debug.Log("Is touching hole");
         if (collision.gameObject.CompareTag("Hole") && death && drag == false)
         {
-            Debug.Log("should be burried");
             transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y - .1f);
+            GetComponent<SpriteRenderer>().sprite = hat;
+            if (!burried)
+            {
+                transform.Rotate(0, 0, -90);
+            }
             burried = true;
+            
         }
         else
         {
+            GetComponent<SpriteRenderer>().sprite = farmer;
+            if (burried)
+            {
+                transform.Rotate(0, 0, 90);
+            }
             burried = false;
         }
     }
