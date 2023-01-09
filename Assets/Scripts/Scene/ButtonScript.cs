@@ -10,7 +10,8 @@ public class ButtonScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        button.onClick.AddListener(TaskOnClick);   
+        button.onClick.AddListener(TaskOnClick);
+
     }
 
     void TaskOnClick()
@@ -19,3 +20,5 @@ public class ButtonScript : MonoBehaviour
         SceneManager.LoadScene("Main Scene");
     }
 }
+
+    

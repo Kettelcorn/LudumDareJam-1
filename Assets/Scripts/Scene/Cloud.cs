@@ -21,7 +21,8 @@ public class Cloud : MonoBehaviour
     void Update()
     {
         float move = player.GetComponent<Player>().Move * 0.5f;
-        if (!van.GetComponent<Van>().Touch && !fence.GetComponent<Fence>().Touch)
+        if (!van.GetComponent<Van>().Touch && !fence.GetComponent<Fence>().Touch &&
+            player.GetComponent<Player>().TempShovel == null)
         {
             if (player.GetComponent<Player>().Organs == null)
             {

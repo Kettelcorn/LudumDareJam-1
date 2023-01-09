@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip clip1;
     [SerializeField] private AudioClip clip2;
     [SerializeField] private AudioClip clip3;
-    [SerializeField] private AudioClip clip4;
+    //[SerializeField] private AudioClip clip4;
 
     [SerializeField] private GameObject shovel;
 
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && beingDragged == null)
+        if (Input.GetKeyDown(KeyCode.Space) && beingDragged == null && tempShovel == null)
         {
             tempSpeed = speed;
             speed = 0;
@@ -102,6 +102,11 @@ public class Player : MonoBehaviour
 
     }
 
+    public GameObject TempShovel
+    {
+        get { return tempShovel; }
+    }
+
     public float Move
     {
         get { return move; }
@@ -129,8 +134,8 @@ public class Player : MonoBehaviour
                 
                 victim.transform.Rotate(0, 0, 90);
                 victim.GetComponent<Animator>().SetBool("Dead", true);
-                AudioClip[] sound = { clip1, clip2, clip3, clip4 };
-                GetComponent<AudioSource>().clip = sound[Random.Range(0, 4)];
+                AudioClip[] sound = { clip1, clip2, clip3};
+                GetComponent<AudioSource>().clip = sound[Random.Range(0, 3)];
                 GetComponent<AudioSource>().Play();
                 GetComponent<AudioSource>().loop = false;
 
@@ -169,10 +174,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.5f), transform.rotation);
         }
-        else if (col.gameObject.CompareTag("Hole"))
+        /*else if (col.gameObject.CompareTag("Hole"))
         {
             Destroy(col.gameObject);
-        }
+        }*/
         speed = tempSpeed;
     }
 
