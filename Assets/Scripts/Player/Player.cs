@@ -8,10 +8,18 @@ public class Player : MonoBehaviour
     [SerializeField] private float dragSpeed;
     [SerializeField] private GameObject hole;
 
+    [SerializeField] private AudioClip clip1;
+    [SerializeField] private AudioClip clip2;
+    [SerializeField] private AudioClip clip3;
+    [SerializeField] private AudioClip clip4;
+
+    [SerializeField] private GameObject shovel;
+
     private float tempSpeed;
     private GameObject[] enemy;
     private Rigidbody2D rb;
     private GameObject beingDragged;
+    private GameObject tempShovel;
     private Collider2D col;
     private float move;
     private bool hidden;
@@ -58,6 +66,7 @@ public class Player : MonoBehaviour
         {
             tempSpeed = speed;
             speed = 0;
+            tempShovel = Instantiate(shovel, new Vector2(transform.position.x - 1f, transform.position.y), transform.rotation);
             Invoke("Dig", 1);
         }
 
@@ -112,7 +121,13 @@ public class Player : MonoBehaviour
         {
             if (victim.GetComponent<Enemy>().Dead == false)
             {
+                
                 victim.transform.Rotate(0, 0, 90);
+                AudioClip[] sound = { clip1, clip2, clip3, clip4 };
+                GetComponent<AudioSource>().clip = sound[Random.Range(0, 4)];
+                GetComponent<AudioSource>().Play();
+                GetComponent<AudioSource>().loop = false;
+
             }
             victim.GetComponent<Enemy>().Dead = true;
             victim.GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree"; 
@@ -143,6 +158,7 @@ public class Player : MonoBehaviour
 
     private void Dig()
     {
+        Destroy(tempShovel);
         if (col == null)
         {
             Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.5f), transform.rotation);

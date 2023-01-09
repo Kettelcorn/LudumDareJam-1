@@ -11,6 +11,8 @@ public class Police : MonoBehaviour
     [SerializeField] private GameObject music;
     [SerializeField] private AudioClip slow;
     [SerializeField] private AudioClip fast;
+    [SerializeField] private AudioClip alert;
+    [SerializeField] private GameObject exclaim;
 
 
     private Rigidbody2D rb;
@@ -20,6 +22,8 @@ public class Police : MonoBehaviour
     private float distance;
     private float timer;
     private float shakeTimer;
+    private GameObject currentExclaim;
+    private float exclaimTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +38,31 @@ public class Police : MonoBehaviour
     {
         timer += Time.deltaTime;
         distance = transform.position.x - player.transform.position.x;
+        if (currentExclaim != null)
+        {
+            currentExclaim.transform.position = new Vector2(transform.position.x, transform.position.y + 2.5f);
+            exclaimTimer += Time.deltaTime;
+            if (exclaimTimer > 1)
+            {
+                Destroy(currentExclaim);
+                currentExclaim = null;
+                music.GetComponent<AudioSource>().clip = fast;
+                music.GetComponent<AudioSource>().Play();
+                music.GetComponent<AudioSource>().loop = true;
+            }
+            
+        }
 
-        
         //Determines to chase or not
         if (Math.Abs(distance) < 8 &&  !player.GetComponent<Player>().Hide)
         {
             if (!chase)
             {
-                music.GetComponent<AudioSource>().clip = fast;
+                currentExclaim = Instantiate(exclaim, new Vector2(transform.position.x, transform.position.y + 2.5f), transform.rotation);
+                exclaimTimer = 0f;
+                music.GetComponent<AudioSource>().Stop();
+                music.GetComponent<AudioSource>().clip = alert;
                 music.GetComponent<AudioSource>().Play();
-                music.GetComponent<AudioSource>().loop = true;
             }
             chase = true;
             shake = false;
@@ -74,7 +93,7 @@ public class Police : MonoBehaviour
         if (chase == true && shake == false)
         {
             shakeTimer = timer;
-            Chase();
+            Chase(); 
         }
         else if (shake == true && timer - shakeTimer < 10)
         {
