@@ -8,8 +8,8 @@ public class Cloud : MonoBehaviour
     [SerializeField] private GameObject van;
     [SerializeField] private GameObject fence;
     [SerializeField] private float speed;
-    private Rigidbody2D rb;
 
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class Cloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Move clouds at slower speed than player, and stop moving when player stops
         float move = player.GetComponent<Player>().Move * 0.5f;
         if (!van.GetComponent<Van>().Touch && !fence.GetComponent<Fence>().Touch &&
             player.GetComponent<Player>().TempShovel == null)
@@ -31,8 +32,7 @@ public class Cloud : MonoBehaviour
             else
             {
                 rb.velocity = new Vector2(speed * move / 3, rb.velocity.y);
-            }
-                
+            }    
         }
         else
         {

@@ -6,25 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class Van : MonoBehaviour
 {
-    
-    [SerializeField] private GameObject player;
-    [SerializeField] private Text amount;
-    [SerializeField] private AudioClip chaching;
     [SerializeField] private GameObject earned;
+    [SerializeField] private GameObject player;
+    [SerializeField] private AudioClip chaching;
+    [SerializeField] private Text amount;
 
+    private GameObject store;
     private float timer;
     private int money;
-    private GameObject store;
     private bool touch;
-    // Start is called before the first frame update
-    void Start()
+
+    // Return value for touch
+    public bool Touch
     {
-        
+        get { return touch; }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Timer for &10,000 object and destroy after 1 second
         if (timer >= 0)
         {
             timer += Time.deltaTime;
@@ -36,11 +37,7 @@ public class Van : MonoBehaviour
         }
     }
 
-    public bool Touch
-    {
-        get { return touch; }
-    }
-
+    // Checks if player is colliding with van, and records score of player
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -65,11 +62,12 @@ public class Van : MonoBehaviour
             GetComponent<AudioSource>().Play();
             store = Instantiate(earned, new Vector2(transform.position.x - 1f, transform.position.y + 3f), transform.rotation);
             timer = 0;
+            
+            // Finish game if all 5 farmers are brought to van
             if (money == 50)
             {
                 SceneManager.LoadScene(sceneName: "Victory Scene");
             }
-            Debug.Log("Successfully sold");
         }
     }
 
@@ -79,7 +77,5 @@ public class Van : MonoBehaviour
         {
             touch = false;
         }
-        
     }
-    
 }

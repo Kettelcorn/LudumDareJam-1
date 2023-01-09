@@ -5,22 +5,14 @@ using UnityEngine;
 public class Fence : MonoBehaviour
 {
     private bool touch;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Get value for touch
     public bool Touch
     {
         get { return touch; }
     }
+
+    // Checks if player is colliding with fence
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

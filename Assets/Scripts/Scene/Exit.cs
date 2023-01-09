@@ -7,21 +7,16 @@ using UnityEngine.SceneManagement;
 public class Exit : MonoBehaviour
 {
     [SerializeField] private Button exit;
-    // Start is called before the first frame update
+    
+    // Add listener to button
     void Start()
     {
         exit.onClick.AddListener(Leave);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Exit game
     void Leave()
     {
-        Debug.Log("You quit the game");
         Application.Quit();
     }
 }

@@ -4,33 +4,53 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private GameObject hole;
+    [SerializeField] private GameObject shovel;
     [SerializeField] private float speed;
     [SerializeField] private float dragSpeed;
-    [SerializeField] private GameObject hole;
     [SerializeField] private float frameRate;
+    
 
     [SerializeField] private AudioClip clip1;
     [SerializeField] private AudioClip clip2;
     [SerializeField] private AudioClip clip3;
-    //[SerializeField] private AudioClip clip4;
-
-    [SerializeField] private GameObject shovel;
-
-    private float tempSpeed;
-    private GameObject[] enemy;
+    
     private Rigidbody2D rb;
+    private GameObject[] enemy;
     private GameObject beingDragged;
     private GameObject tempShovel;
     private Collider2D col;
     private float move;
+    private float tempSpeed;
     private bool hidden;
 
-    
+    // Getters and Setters for private variables
+    public GameObject TempShovel
+    {
+        get { return tempShovel; }
+    }
+    public GameObject Organs
+    {
+        get { return beingDragged; }
+        set { beingDragged = value; }
+    }
+    public float Move
+    {
+        get { return move; }
+    }
+    public bool Hide
+    {
+        get { return hidden; }
+        set { hidden = value; }
+    }
+
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         GetComponent<Animator>().speed = frameRate;
-        // ignore collision with enemies
+
+        // Ignore collision with enemies
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject npc in enemy)
         {
@@ -39,10 +59,10 @@ public class Player : MonoBehaviour
         
     }
 
+    // Update is called once per frame
     void Update()
     {
-
-        // Sets horizontal movement
+        // Sets horizontal movement, orients sprite to face right direction
         move = Input.GetAxis("Horizontal");
         if (move > 0)
         {
@@ -52,6 +72,8 @@ public class Player : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().flipX = true;
         }
+
+        // Changes speed if dragging body
         if (beingDragged != null)
         {
             rb.velocity = new Vector2(move * dragSpeed, rb.velocity.y);
@@ -61,17 +83,18 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(speed * move, rb.velocity.y);
         }
         
-        
-
+        // Dig hole if not dragging body
         if (Input.GetKeyDown(KeyCode.Space) && beingDragged == null && tempShovel == null)
         {
             tempSpeed = speed;
             speed = 0;
             tempShovel = Instantiate(shovel, new Vector2(transform.position.x - 1f, transform.position.y), transform.rotation);
+
+            // Delay instantiation of hole sprite
             Invoke("Dig", 1);
         }
 
-        // If player presses F, attempt to kill npc
+        // If press F, attempt to kill
         if (Input.GetKeyDown(KeyCode.F))
         {
             Kill();
@@ -80,6 +103,7 @@ public class Player : MonoBehaviour
         // If player presses left shift, attempt to drag dead body
         if (Input.GetKeyDown(KeyCode.LeftShift) && ClosestEnemy() != null)
         {
+            // Checks if closest enemy is dead and if they are being dragged
             if (ClosestEnemy().GetComponent<Enemy>().Dead && !ClosestEnemy().GetComponent<Enemy>().Drag)
             {
                 beingDragged = ClosestEnemy();
@@ -91,6 +115,7 @@ public class Player : MonoBehaviour
                 beingDragged = null;
             }
         }
+        // If you are dragging someone, call Drag to set their position
         if (beingDragged != null)
         {
             if (beingDragged.GetComponent<Enemy>().Drag)
@@ -98,32 +123,11 @@ public class Player : MonoBehaviour
                 Drag();
             }
         }
-           
-
     }
 
-    public GameObject TempShovel
-    {
-        get { return tempShovel; }
-    }
+    
 
-    public float Move
-    {
-        get { return move; }
-    }
-    public bool Hide
-    {
-        get { return hidden; }
-        set { hidden = value; }
-    }
-
-    public GameObject Organs
-    {
-        get { return beingDragged; }
-        set { beingDragged = value; }
-    }
-
-    // Selects closest npc, checks if it is close enough, and kills it if so
+    // Selects closest farmer, checks if it is close enough, and kills it if so
     private void Kill()
     {
         GameObject victim = ClosestEnemy(); 
@@ -155,18 +159,16 @@ public class Player : MonoBehaviour
             {
                 victim.transform.position = new Vector2(transform.position.x - 1.5f, victim.transform.position.y);
             }
-                
             else if (move < 0)
             {
                 victim.transform.position = new Vector2(transform.position.x + 1.5f, victim.transform.position.y);
-            }
-                
+            }  
             else
                 victim.transform.position = new Vector2(victim.transform.position.x, victim.transform.position.y);
-
         }
     } 
 
+    // Destroy shovel sprite and instantiate hole object, return player movement to normal
     private void Dig()
     {
         Destroy(tempShovel);
@@ -174,16 +176,13 @@ public class Player : MonoBehaviour
         {
             Instantiate(hole, new Vector2(transform.position.x, transform.position.y - 1.5f), transform.rotation);
         }
-        /*else if (col.gameObject.CompareTag("Hole"))
-        {
-            Destroy(col.gameObject);
-        }*/
         speed = tempSpeed;
     }
 
-    // Checks all enemies and returns the closest one
+    // Checks all farmers and returns the closest one, and sees if they are close enough to perform action on
     private GameObject ClosestEnemy()
     {
+        // Finds closest enemy
         int victim = 0;
         for (int i = 1; i < enemy.Length; i++)
         {
@@ -191,21 +190,18 @@ public class Player : MonoBehaviour
                 Vector2.Distance(transform.position, enemy[victim].transform.position))
             {
                 victim = i;
-            }
-            
+            }  
         }
-        Debug.Log("Victim =" + victim);
-        Debug.Log("Distance: " + Vector2.Distance(transform.position, enemy[victim].transform.position));
+
+        // Determines if they are close enough
         if ((Vector2.Distance(transform.position, enemy[victim].transform.position)) < 2)
         {
-            Debug.Log("You are close enough");
             return enemy[victim];
         }
         return null;
     }
 
-
-
+    // For checking collision triggers
     private void OnTriggerStay2D(Collider2D collision)
     {
         col = collision;

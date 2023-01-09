@@ -7,16 +7,17 @@ using UnityEngine.SceneManagement;
 public class ButtonScript : MonoBehaviour
 {
     [SerializeField] private Button button;
-    // Start is called before the first frame update
+    
+    // Create button listener
     void Start()
     {
         button.onClick.AddListener(TaskOnClick);
 
     }
 
+    // Start Game
     void TaskOnClick()
     {
-        Debug.Log("You pressed the button");
         SceneManager.LoadScene("Main Scene");
     }
 }

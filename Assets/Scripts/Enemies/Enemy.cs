@@ -7,26 +7,44 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private GameObject police;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject text;
+    [SerializeField] private Sprite hat;
+    [SerializeField] private Sprite farmer;
     [SerializeField] private int time;
     [SerializeField] private float speed;
     [SerializeField] private float pause;
-    [SerializeField] private GameObject player;
-    [SerializeField] private GameObject police;
-    [SerializeField] private Sprite hat;
-    [SerializeField] private Sprite farmer;
-    [SerializeField] private GameObject text;
 
+    private GameObject[] enemy;
     private Rigidbody2D rb;
+    private float gameTimer;
     private bool death;
     private bool drag;
     private bool burried;
-    private float gameTimer;
-    private GameObject[] enemy;
+
+    // Getters and Setters
+    public bool Dead
+    {
+        get { return death; }
+        set { death = value; }
+    }
+    public bool Drag
+    {
+        get { return drag; }
+        set { drag = value; }
+    }
+    public bool Bury
+    {
+        get { return burried; }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        // Ignore collision with other farmers
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject npc in enemy)
         {
@@ -38,16 +56,19 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         gameTimer += Time.deltaTime;
+        // If not dead, have normal movement
         if (!death)
         { 
             Movement();
         }
 
+        // If police officer find the dead body not burried, end game
         if (Math.Abs(transform.position.x - police.transform.position.x) < 1.5 && death && !burried)
         {
             SceneManager.LoadScene(sceneName: "Game Over Found");
         }
 
+        // Flips sprite based on direction you are moving
         if (rb.velocity.x > 0 && !death)
         {
             GetComponent<SpriteRenderer>().flipX = false;
@@ -58,23 +79,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public bool Dead
-    { 
-        get { return death; }
-        set { death = value; }
-    }
-
-    public bool Drag
-    {
-        get { return drag; }
-        set { drag = value; }
-    }
-
-    public bool Bury
-    {
-        get { return burried; }
-    }
-
+    // Default movement loop for farmer
     public void Movement()
     {
         if ((int)gameTimer % 4 == 0)
@@ -95,6 +100,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // Checks collision to see if farmer should be burried in hole
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Hole") && death && drag == false)
@@ -105,8 +111,7 @@ public class Enemy : MonoBehaviour
             {
                 transform.Rotate(0, 0, -90);
             }
-            burried = true;
-            
+            burried = true;  
         }
         else
         {

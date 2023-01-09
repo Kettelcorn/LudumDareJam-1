@@ -6,25 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class Police : MonoBehaviour
 {
-    [SerializeField] private float speed;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject music;
+    [SerializeField] private GameObject exclaim;
     [SerializeField] private AudioClip slow;
     [SerializeField] private AudioClip fast;
     [SerializeField] private AudioClip alert;
-    [SerializeField] private GameObject exclaim;
+    [SerializeField] private float speed;
 
-
+    private GameObject currentExclaim;
     private Rigidbody2D rb;
-    private bool direction;
-    private bool chase;
-    private bool shake;
     private float distance;
     private float timer;
     private float shakeTimer;
-    private GameObject currentExclaim;
     private float exclaimTimer;
-
+    private bool direction;
+    private bool chase;
+    private bool shake;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +37,8 @@ public class Police : MonoBehaviour
     {
         timer += Time.deltaTime;
         distance = transform.position.x - player.transform.position.x;
+
+        // Move exclamation mark on officer with him for 1 second, then destroy it and play fast music
         if (currentExclaim != null)
         {
             currentExclaim.transform.position = new Vector2(transform.position.x, transform.position.y + 2.5f);
@@ -49,11 +50,10 @@ public class Police : MonoBehaviour
                 music.GetComponent<AudioSource>().clip = fast;
                 music.GetComponent<AudioSource>().Play();
                 music.GetComponent<AudioSource>().loop = true;
-            }
-            
+            } 
         }
 
-        //Determines to chase or not
+        // Determines to chase or not
         if (Math.Abs(distance) < 8 &&  !player.GetComponent<Player>().Hide)
         {
             if (!chase)
@@ -66,19 +66,10 @@ public class Police : MonoBehaviour
             }
             chase = true;
             GetComponent<Animator>().speed = 2;
-           
-
             shake = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log("distance = " + distance);
-            Debug.Log("chase = " + chase);
-            Debug.Log("shake = " + shake);
-            Debug.Log("is player hidden? " + player.GetComponent<Player>().Hide);
-        }
-
+        // Changes layer of officer sprite depending on if the player has shaken the officer
         if (!shake)
         {
             GetComponent<SpriteRenderer>().sortingLayerName = "Even more behind tree";
@@ -87,12 +78,12 @@ public class Police : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sortingLayerName = "Infront Tree";
         }
+
         //Determines to continue or end chase
         if (Math.Abs(distance) > 10)
         {
             shake = true;
         }
-
         if (chase == true && shake == false)
         {
             shakeTimer = timer;
@@ -115,11 +106,13 @@ public class Police : MonoBehaviour
             Movement(speed);
         }
         
+        // If officer catches you, end the game
         if (Math.Abs(distance) < 1.6 && chase == true && shake == false)
         {
         SceneManager.LoadScene(sceneName: "Game Over Caught");
         }
 
+        // Changes sprite orientation based on movement
         if (rb.velocity.x > 0)
         {
             GetComponent<SpriteRenderer>().flipX = false;
@@ -130,6 +123,7 @@ public class Police : MonoBehaviour
         }
     }
 
+    // Sets default officer movement
     private void Movement(float runSpeed)
     {
         if (direction)
@@ -142,6 +136,7 @@ public class Police : MonoBehaviour
         }
     }
 
+    // Sets officer chase movement
     private void Chase()
     {
         if (distance < 0)
@@ -156,6 +151,7 @@ public class Police : MonoBehaviour
         }
     }
 
+    // Bounces officer off wall and send in other direction
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
