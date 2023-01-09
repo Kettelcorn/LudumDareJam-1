@@ -125,8 +125,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-
     // Selects closest farmer, checks if it is close enough, and kills it if so
     private void Kill()
     {
