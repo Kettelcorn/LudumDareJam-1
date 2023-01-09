@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float dragSpeed;
     [SerializeField] private GameObject hole;
+    [SerializeField] private float frameRate;
 
     [SerializeField] private AudioClip clip1;
     [SerializeField] private AudioClip clip2;
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        GetComponent<Animator>().speed = frameRate;
         // ignore collision with enemies
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject npc in enemy)
@@ -123,6 +124,7 @@ public class Player : MonoBehaviour
             {
                 
                 victim.transform.Rotate(0, 0, 90);
+                victim.GetComponent<Animator>().SetBool("Dead", true);
                 AudioClip[] sound = { clip1, clip2, clip3, clip4 };
                 GetComponent<AudioSource>().clip = sound[Random.Range(0, 4)];
                 GetComponent<AudioSource>().Play();

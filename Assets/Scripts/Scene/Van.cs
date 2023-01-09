@@ -42,8 +42,15 @@ public class Van : MonoBehaviour
             player.GetComponent<Player>().Organs.transform.position = new Vector2(10000000, 10000000);
             player.GetComponent<Player>().Organs.GetComponent<Enemy>().Drag = false;
             player.GetComponent<Player>().Organs = null;
-            money += 10000;
-            amount.text = "$" + money;
+            money += 10;
+            if (money == 0)
+            {
+                amount.text = "$0";
+            } 
+            else
+            {
+                amount.text = "$" + money + ",000";
+            }
             GetComponent<AudioSource>().clip = chaching;
             GetComponent<AudioSource>().Play();
             store = Instantiate(earned, new Vector2(transform.position.x - 1f, transform.position.y + 3f), transform.rotation);

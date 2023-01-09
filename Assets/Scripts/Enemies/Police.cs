@@ -65,6 +65,9 @@ public class Police : MonoBehaviour
                 music.GetComponent<AudioSource>().Play();
             }
             chase = true;
+            GetComponent<Animator>().speed = 2;
+           
+
             shake = false;
         }
 
@@ -107,6 +110,7 @@ public class Police : MonoBehaviour
                 music.GetComponent<AudioSource>().Play();
                 music.GetComponent<AudioSource>().loop = true;
             }
+            GetComponent<Animator>().speed = 1;
             chase = false;
             Movement(speed);
         }

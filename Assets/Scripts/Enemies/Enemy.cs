@@ -87,8 +87,10 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Hole") && death && drag == false)
         {
+            GetComponent<Animator>().SetBool("Burried", true);
             transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y - .1f);
-            GetComponent<SpriteRenderer>().sprite = hat;
+            
+            //GetComponent<SpriteRenderer>().sprite = hat;
             if (!burried)
             {
                 transform.Rotate(0, 0, -90);
@@ -98,6 +100,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            GetComponent<Animator>().SetBool("Burried", false);
             GetComponent<SpriteRenderer>().sprite = farmer;
             if (burried)
             {
