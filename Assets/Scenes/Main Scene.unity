@@ -182,6 +182,7 @@ MonoBehaviour:
   police: {fileID: 2138529456}
   hat: {fileID: 21300000, guid: da8c1b37d9a0a0a4fad4d21cb6f38a12, type: 3}
   farmer: {fileID: 21300000, guid: 51a8b7f2cfebc38408ce2330c99077a2, type: 3}
+  text: {fileID: 0}
 --- !u!61 &77606659
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -722,6 +723,7 @@ MonoBehaviour:
   police: {fileID: 2138529456}
   hat: {fileID: 21300000, guid: da8c1b37d9a0a0a4fad4d21cb6f38a12, type: 3}
   farmer: {fileID: 21300000, guid: 51a8b7f2cfebc38408ce2330c99077a2, type: 3}
+  text: {fileID: 0}
 --- !u!61 &427658379
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -929,6 +931,7 @@ MonoBehaviour:
   police: {fileID: 2138529456}
   hat: {fileID: 21300000, guid: da8c1b37d9a0a0a4fad4d21cb6f38a12, type: 3}
   farmer: {fileID: 21300000, guid: 51a8b7f2cfebc38408ce2330c99077a2, type: 3}
+  text: {fileID: 0}
 --- !u!61 &470755250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1708,6 +1711,7 @@ MonoBehaviour:
   police: {fileID: 2138529456}
   hat: {fileID: 21300000, guid: da8c1b37d9a0a0a4fad4d21cb6f38a12, type: 3}
   farmer: {fileID: 21300000, guid: 51a8b7f2cfebc38408ce2330c99077a2, type: 3}
+  text: {fileID: 0}
 --- !u!61 &818907628
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2000,6 +2004,7 @@ MonoBehaviour:
   police: {fileID: 2138529456}
   hat: {fileID: 21300000, guid: da8c1b37d9a0a0a4fad4d21cb6f38a12, type: 3}
   farmer: {fileID: 21300000, guid: 51a8b7f2cfebc38408ce2330c99077a2, type: 3}
+  text: {fileID: 0}
 --- !u!61 &856102012
 BoxCollider2D:
   m_ObjectHideFlags: 0

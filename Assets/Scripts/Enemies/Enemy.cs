@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,19 +14,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject police;
     [SerializeField] private Sprite hat;
     [SerializeField] private Sprite farmer;
+    [SerializeField] private GameObject text;
 
     private Rigidbody2D rb;
-    private int counter;
     private bool death;
     private bool drag;
     private bool burried;
+    private float gameTimer;
     private GameObject[] enemy;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        counter = 0;
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject npc in enemy)
         {
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gameTimer += Time.deltaTime;
         if (!death)
         { 
             Movement();
@@ -75,12 +77,22 @@ public class Enemy : MonoBehaviour
 
     public void Movement()
     {
-        counter++;
-        if (counter < time) rb.velocity = new Vector2(speed, 0);
-        else if (counter < time + pause) rb.velocity = new Vector2(0, 0);
-        else if (counter < time * 2 + pause) rb.velocity = new Vector2(-speed, 0);
-        else if (counter < time * 2 + pause * 2) rb.velocity = new Vector2(0, 0);
-        else counter = 0;
+        if ((int)gameTimer % 4 == 0)
+        {
+            rb.velocity = new Vector2(speed, 0);
+        } 
+        else if ((int)gameTimer % 4 == 1)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if ((int)gameTimer % 4 == 2)
+        {
+            rb.velocity = new Vector2(-speed, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
     }
 
     public void OnTriggerStay2D(Collider2D collision)

@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Scene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Game over Caught.unity
-    guid: ad14979ae49d41245aa4b4041ea55aaa
-  - enabled: 1
     path: Assets/Scenes/Game over Found.unity
     guid: 4ae85a8b7d9f71746b4bc472222bae53
+  - enabled: 1
+    path: Assets/Scenes/Game over Caught.unity
+    guid: ad14979ae49d41245aa4b4041ea55aaa
   - enabled: 1
     path: Assets/Scenes/Victory Scene.unity
     guid: fb30622568bd6bc4aa6f2299b3df1b86
