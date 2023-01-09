@@ -102,6 +102,10 @@ public class Player : MonoBehaviour
 
     }
 
+    public float Move
+    {
+        get { return move; }
+    }
     public bool Hide
     {
         get { return hidden; }

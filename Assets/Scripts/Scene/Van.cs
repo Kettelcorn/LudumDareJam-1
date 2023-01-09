@@ -15,6 +15,7 @@ public class Van : MonoBehaviour
     private float timer;
     private int money;
     private GameObject store;
+    private bool touch;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +36,17 @@ public class Van : MonoBehaviour
         }
     }
 
+    public bool Touch
+    {
+        get { return touch; }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            touch = true;
+        }
         if (collision.gameObject.CompareTag("Player") && player.GetComponent<Player>().Organs != null)
         {
             player.GetComponent<Player>().Organs.transform.position = new Vector2(10000000, 10000000);
@@ -62,4 +72,14 @@ public class Van : MonoBehaviour
             Debug.Log("Successfully sold");
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            touch = false;
+        }
+        
+    }
+    
 }
