@@ -89,8 +89,6 @@ public class Enemy : MonoBehaviour
         {
             GetComponent<Animator>().SetBool("Burried", true);
             transform.position = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y - .1f);
-            
-            //GetComponent<SpriteRenderer>().sprite = hat;
             if (!burried)
             {
                 transform.Rotate(0, 0, -90);

@@ -65,7 +65,7 @@ public class Van : MonoBehaviour
             GetComponent<AudioSource>().Play();
             store = Instantiate(earned, new Vector2(transform.position.x - 1f, transform.position.y + 3f), transform.rotation);
             timer = 0;
-            if (money == 5000)
+            if (money == 50)
             {
                 SceneManager.LoadScene(sceneName: "Victory Scene");
             }

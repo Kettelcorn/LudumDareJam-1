@@ -280,7 +280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -297.12, y: 22}
+  m_AnchoredPosition: {x: 1, y: 45}
   m_SizeDelta: {x: 484.76, y: 334.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &220010601
@@ -305,10 +305,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 3
     m_MaxSize: 48
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -316,8 +316,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Goal: Kill all 5 farmers and bring them to your van. Hide from the officer
-    behind trees and hide bodies in holes!'
+  m_Text: "Goal: \nKill all 5 farmers and bring them to your van. Hide from the officer
+    behind trees and hide bodies in holes!"
 --- !u!222 &220010602
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -737,14 +737,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb45e6b64cce3f4183ce278fb68e1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  dragSpeed: 3
+  speed: 100
+  dragSpeed: 30
   hole: {fileID: 7657769772756331910, guid: de1197acc2553a34186d34b133749c64, type: 3}
   frameRate: 0
   clip1: {fileID: 0}
   clip2: {fileID: 0}
   clip3: {fileID: 0}
-  clip4: {fileID: 0}
   shovel: {fileID: 0}
 --- !u!212 &813748947
 SpriteRenderer:
@@ -1858,7 +1857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 242.43076, y: 25}
+  m_AnchoredPosition: {x: 0, y: -134}
   m_SizeDelta: {x: 594.3385, y: 334.0364}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392833766
@@ -1883,7 +1882,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -1951,7 +1950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -21, y: -139}
+  m_AnchoredPosition: {x: -2, y: -181}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1456175695
@@ -2957,7 +2956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
